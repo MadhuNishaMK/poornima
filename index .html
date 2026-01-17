@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Sign Up</h2>
+  <p class="subtitle">Please fill in this form to create an account!</p>
+
+  <form id="signupForm">
+    <div class="row">
+      <input type="text" id="fname" placeholder="First Name">
+      <input type="text" id="lname" placeholder="Last Name">
+    </div>
+    <small id="nameError" class="error"></small>
+
+    <input type="text" id="email" placeholder="Email">
+    <small id="emailError" class="error"></small>
+
+    <input type="password" id="password" placeholder="Password">
+    <small id="passError" class="error"></small>
+
+    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+    <small id="confirmError" class="error"></small>
+
+    <label class="checkbox">
+      <input type="checkbox" id="terms"> I accept the
+      <span>Terms of Use & Privacy Policy</span>
+    </label>
+
+    <button type="submit" id="submitBtn" disabled>Sign Up</button>
+  </form>
+
+  <p class="login">Already have an account? <a href="#">Login here</a></p>
+</div>
+
+<script>
+const fname = document.getElementById("fname");
+const lname = document.getElementById("lname");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirmPassword");
+const terms = document.getElementById("terms");
+const submitBtn = document.getElementById("submitBtn");
+
+function validate() {
+  let valid = true;
+
+  // Name validation
+  if (fname.value === "" || lname.value === "") {
+    document.getElementById("nameError").innerText = "Name is required";
+    valid = false;
+  } else {
+    document.getElementById("nameError").innerText = "";
+  }
+
+  // Email validation
+  const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+  if (!email.value.match(emailPattern)) {
+    document.getElementById("emailError").innerText = "Invalid email address";
+    valid = false;
+  } else {
+    document.getElementById("emailError").innerText = "";
+  }
+
+  // Password validation
+  if (password.value.length < 6) {
+    document.getElementById("passError").innerText = "Password must be at least 6 characters";
+    valid = false;
+  } else {
+    document.getElementById("passError").innerText = "";
+  }
+
+  // Confirm password
+  if (password.value !== confirmPassword.value || confirmPassword.value === "") {
+    document.getElementById("confirmError").innerText = "Passwords do not match";
+    valid = false;
+  } else {
+    document.getElementById("confirmError").innerText = "";
+  }
+
+  // Terms checkbox
+  if (!terms.checked) {
+    valid = false;
+  }
+
+  submitBtn.disabled = !valid;
+}
+
+document.querySelectorAll("input").forEach(input => {
+  input.addEventListener("input", validate);
+});
+</script>
+
+</body>
+</html>
